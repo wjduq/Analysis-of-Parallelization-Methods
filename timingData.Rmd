@@ -46,13 +46,13 @@ timingGPU <- read.csv("./Timing_Data/Timing for CS401 GPU.csv")
 timing %>% 
   ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
   geom_col(color = "black", alpha = 0.7, position = "dodge") +
-  labs(title = "All",
+  labs(title = "All Methods",
        x = "Algorithm",
        y = "Time (msec)",
        fill = "Array\nSize") +
   theme_fivethirtyeight() +
   theme(text = element_text(size = 9),
-      plot.title = element_text(size = 12),
+      plot.title = element_text(size = 20),
       plot.caption = element_text(size = 8),
       legend.text = element_text(size = 10),
       legend.title = element_text(size = 10),
@@ -62,13 +62,13 @@ timing %>%
 timing %>% filter(Algo != "Try2") %>% 
   ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
   geom_col(color = "black", alpha = 0.7, position = "dodge") +
-  labs(title = "Without Try 2",
+  labs(title = "All Methods (Except Try 2)",
        x = "Algorithm",
        y = "Time (msec)",
        fill = "Array\nSize") +
   theme_fivethirtyeight() +
   theme(text = element_text(size = 9),
-      plot.title = element_text(size = 12),
+      plot.title = element_text(size = 20),
       plot.caption = element_text(size = 8),
       legend.text = element_text(size = 10),
       legend.title = element_text(size = 10),
