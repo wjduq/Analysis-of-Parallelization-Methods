@@ -1,0 +1,124 @@
+---
+title: "Timing Analysis"
+author: "Will Duquette and Lucy Anderson"
+date: "2022-12-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(googlesheets4)
+library(car)
+library(tidyverse)
+library(ggplot2)
+library(corrplot)
+library(RColorBrewer)
+library(ggforce)
+library(showtext)
+library(cowplot)
+library("readxl")
+library(Quandl)
+library(dplyr)
+library(tidyverse)
+font_add_google("Josefin Sans", "JS", regular.wt = 400)
+showtext_opts(dpi = 300)
+showtext_auto(enable = TRUE)
+library(sp)
+library(raster)
+library(ggthemes)
+library(ggcorrplot)
+library(maps)
+library(mapproj)
+library(ggridges)
+library(paletteer)
+```
+
+```{r, message=FALSE}
+timing <- read.csv("./Timing_Data/Timing for CS401.csv")
+timingCPU <- read.csv("./Timing_Data/Timing for CS401 CPU.csv")
+timingGPU <- read.csv("./Timing_Data/Timing for CS401 GPU.csv")
+```
+
+
+
+```{r}
+timing %>% 
+  ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
+  geom_col(color = "black", alpha = 0.7, position = "dodge") +
+  labs(title = "All",
+       x = "Algorithm",
+       y = "Time (msec)",
+       fill = "Array\nSize") +
+  theme_fivethirtyeight() +
+  theme(text = element_text(size = 9),
+      plot.title = element_text(size = 12),
+      plot.caption = element_text(size = 8),
+      legend.text = element_text(size = 10),
+      legend.title = element_text(size = 10),
+      axis.title.y = element_text(size = 12),
+      axis.title.x = element_text(size = 15))
+
+timing %>% filter(Algo != "Try2") %>% 
+  ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
+  geom_col(color = "black", alpha = 0.7, position = "dodge") +
+  labs(title = "Without Try 2",
+       x = "Algorithm",
+       y = "Time (msec)",
+       fill = "Array\nSize") +
+  theme_fivethirtyeight() +
+  theme(text = element_text(size = 9),
+      plot.title = element_text(size = 12),
+      plot.caption = element_text(size = 8),
+      legend.text = element_text(size = 10),
+      legend.title = element_text(size = 10),
+      axis.title.y = element_text(size = 12),
+      axis.title.x = element_text(size = 15))
+```
+
+
+
+
+
+```{r}
+p1 <- timingCPU %>% 
+  ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
+  geom_col(color = "black", alpha = 0.7, position = "dodge") +
+  labs(title = "CPU",
+       y = "Time (msec)",
+       fill = "Array\nSize") +
+  theme_fivethirtyeight() +
+  theme(text = element_text(size = 9),
+      plot.title = element_text(size = 12),
+      plot.caption = element_text(size = 8),
+      legend.text = element_text(size = 10),
+      legend.title = element_text(size = 10),
+      axis.title.y = element_text(size = 12))
+```
+
+```{r}
+p2 <-timingGPU %>% 
+  ggplot(aes(y = Time, x = Algo, fill = as.factor(Count))) +
+  geom_col(color = "black", alpha = 0.7, position = "dodge") +
+  labs(title = "GPU",
+       y = "Time (msec)",
+       fill = "Array\nSize") +
+  theme_fivethirtyeight() +
+  theme(text = element_text(size = 9),
+      plot.title = element_text(size = 12),
+      plot.caption = element_text(size = 8),
+      legend.text = element_text(size = 10),
+      legend.title = element_text(size = 10),
+      axis.title.y = element_text(size = 12))
+```
+
+```{r}
+plot_grid(p1,p2)
+```
+
+
+
+
+
+
+
