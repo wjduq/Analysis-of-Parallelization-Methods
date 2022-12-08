@@ -1,6 +1,7 @@
 # Analysis of Parallelization Methods
 
 **Date:** 9/30/2022
+
  By: Lucy Anderson and Will Duquette
  
 The following code and examples are for a paper written by William Duquette and Lucy Anderson called "Analysis of Parallelization Methods." Outside of the paper, there are two files worth noting. First, there is a C++ file where we implement a multi-threaded count 3s algorithm on the CPU (there is code to time the functions). Second, there is a CUDA file in which we use CUDA (developed by NVIDIA for use on their GPUs) to run a count 3s algorithm on the GPU. Within our CUDA file we have two approaches to the problem. First, we use the default NULL stream. The second approach utilizes different streams to improve our code when we see larger data.
